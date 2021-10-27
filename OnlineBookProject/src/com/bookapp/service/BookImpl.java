@@ -1,43 +1,64 @@
 package com.bookapp.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.bookapp.bean.Book;
+
 import com.bookapp.exception.AuthorNotFoundException;
 import com.bookapp.exception.CategoryNotFoundException;
 
 public class BookImpl implements BookInter{
 
-	List<Book> bookList = new ArrayList<>();
+	List<Book> booksList = new ArrayList<>();
+
 	@Override
 	public void addBook(Book book) {
-		bookList.add(book);
+
+		booksList.add(book);
 	}
 
 	@Override
 	public List<Book> getAllBooks() {
-		Collections.sort(bookList, (book1,book2)->{
-			return book1.getTitle().compareTo(book2.getTitle());
-		});
-		return bookList;
+		booksList.sort(Comparator.comparing(Book::getTitle));
+		return booksList;
 	}
 
 	@Override
 	public List<Book> getBookbyAuthor(String author) throws AuthorNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Book> filteredList;
+
+		filteredList = booksList.stream()
+				.filter(book -> Objects.equals(book.getAuthor(), author))
+				.collect(Collectors.toList());
+
+		if (filteredList.isEmpty()) {
+			throw new AuthorNotFoundException();
+		}
+
+		return filteredList;
 	}
 
 	@Override
 	public List<Book> getBookbycategory(String category) throws CategoryNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Book> filteredList;
+
+		filteredList = booksList.stream()
+				.filter(book -> Objects.equals(book.getCategory(), category))
+				.collect(Collectors.toList());
+
+		if (filteredList.isEmpty()) {
+			throw new CategoryNotFoundException();
+		}
+
+		return filteredList;
+	}
 	}
 	
 	
 
 	
 
-}
+

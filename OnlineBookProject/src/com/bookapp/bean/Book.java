@@ -4,10 +4,20 @@ public class Book {
 	String title,author,category;
 	int bookid;
 	int price;
-	
+//constructor
+	public Book(String title, String author, String category, int bookid, int price) {
+		this.title = title;
+		this.author = author;
+		this.category = category;
+		this.bookid = bookid;
+		this.price = price;
+	}
+
 	public String getTitle() {
 		return title;
 	}
+
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -38,8 +48,9 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", category=" + category + ", bookid=" + bookid
-				+ ", price=" + price + "]";
+
+		return "Book [title = " + title + ", author = " + author + ", category = " + category + ", bookid = " + bookid
+				+ ", price = " + price + "]";
 	}
 	
 
